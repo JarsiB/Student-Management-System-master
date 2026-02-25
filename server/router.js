@@ -22,21 +22,34 @@ router.get("/", async (req, res) => {
 });
 
 // Update
+// router.put("/update/:id", async (req, res) => {
+//   var update = await InfoRouter.updateOne(
+//     { _id: req.body._id },
+//     {
+//       $set: {
+//         Name: req.body.Name,
+//         Age: req.body.Age,
+//         City: req.body.City,
+//       },
+//     }
+//   );
+
+//   res.json(update);
+// });
+
 router.put("/update/:id", async (req, res) => {
-  var update = await InfoRouter.updateOne(
-    { _id: req.body._id },
+  const update = await InfoRouter.findByIdAndUpdate(
+    req.params.id,
     {
-      $set: {
-        Name: req.body.Name,
-        Age: req.body.Age,
-        City: req.body.City,
-      },
-    }
+      Name: req.body.Name,
+      Age: req.body.Age,
+      City: req.body.City,
+    },
+    { new: true },
   );
 
   res.json(update);
 });
-
 // Delete
 router.delete("/del/:id", async (req, res) => {
   var deldata = await InfoRouter.findByIdAndRemove(req.params.id).then((e) => {
